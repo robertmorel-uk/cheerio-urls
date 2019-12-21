@@ -3,14 +3,6 @@
 Script built in Puppeteer and JavaScript, then migrated to Node using Cheerio and Axios for requests
 */
 
-/*
-Current Issues
-
-Some archives don't have a obvious anchors, i.e they are on great grandparents
-Some blog archives use span instead of header
-
-*/
-
 const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs');
@@ -22,7 +14,9 @@ const blogUrls = [
     "https://www.pentasecurity.com/blog/page/2/",
     "https://blogs.deloitte.ch/banking/",
     "https://www.fca.org.uk/insight/",
-    "https://www.bissresearch.com/"
+    "https://www.bissresearch.com/",
+    "https://www.coindesk.com/",
+    "https://www.newsbtc.com/"
 ];
 
 let linkText = "";
@@ -32,28 +26,52 @@ let linkLink = "";
 let linksArr = [];
 let jsonContent = {};
 
+const capit = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+let getLinks = (linkTextP, linkTextLCP, linkLinkP) => {
+
+    linkText = linkTextP;
+    linkTextLC = linkTextLCP;
+    linkLink = linkLinkP;
+
+    let blogWorthy = false;
+    let blogUnworthy = false;
+
+    const blogWords = ['blog', 'cryptocurrency', 'crypterium', 'blockchain', 'fintech', 'libra', 'equity', 'bank', 'research', 'MiFid', 'data', 'hacking', 'bitcoin'];
+
+    const badBlogWords = ['..', '...', '»', ' · '];
+
+    if ((linkText != undefined && linkText != null && linkTextLC != "") &&
+        (linkLink != undefined && linkLink != null && linkLink != "")) {
+        blogWorthy = blogWords.some(o => linkTextLC.includes(o));
+        blogUnworthy = badBlogWords.some(o => linkText.includes(o));
+        if (blogWorthy) {
+            if (!blogUnworthy) {
+                linksArr.push({
+                    "Title": linkText,
+                    "Link": linkLink
+                });
+
+            }
+        }
+    }
+} //end fun
+
 let contents = fs.readFileSync("json/urls.json");
 if (contents.length != 0) {
     jsonContent = JSON.parse(contents);
 } else jsonContent = linksArr;
 
-console.log(jsonContent);
-
+//Loop through blog post archive urls
 for (let r = 0; r < blogUrls.length; r++) {
     axios.get(blogUrls[r]).then((response) => {
-
         const $ = cheerio.load(response.data)
 
-        const blogWords = ['blog', 'cryptocurrency', 'crypterium', 'blockchain', 'fintech', 'libra', 'equity', 'bank', 'research', 'MiFid', 'data', 'hacking', 'bitcoin'];
-        const badBlogWords = ['..', '...', '»', ' ·  '];
-
-        const capit = (s) => {
-            if (typeof s !== 'string') return ''
-            return s.charAt(0).toUpperCase() + s.slice(1)
-        }
-
-        let aLink = $('a');
         for (let i = 1; i <= 6; i++) {
+            //Anchor tags with header parent
             if ($("a").parent().is("h" + i)) {
                 $("h" + i).each(function (index) {
                     if ($(this).has("a")) {
@@ -67,30 +85,13 @@ for (let r = 0; r < blogUrls.length; r++) {
                                 $(this).attr('class').indexOf('title') > -1
                             )
                         ) {
-
                             linkText = $(this).text();
                             linkTextLC = linkText.toLowerCase();
                             linkLink = $("a", this).attr("href");
 
-
-                            if ((linkText != undefined && linkText != null && linkTextLC != "") &&
-                                (linkLink != undefined && linkLink != null && linkLink != "")) {
-                                let blogWorthy = blogWords.some(o => linkTextLC.includes(o));
-                                let blogUnworthy = badBlogWords.some(o => linkText.includes(o));
-                                if (blogWorthy) {
-                                    if (!blogUnworthy) {
-                                        linksArr.push({
-                                            "Title": linkText,
-                                            "Link": linkLink
-                                        });
-
-                                    }
-                                }
-                            }
+                            getLinks(linkText, linkTextLC, linkLink);
                         }
-
                     }
-
                 });
             }
 
@@ -108,32 +109,17 @@ for (let r = 0; r < blogUrls.length; r++) {
                                 $(this).attr('class').indexOf('title') > -1
                             )
                         ) {
-
                             linkText = $(this).text();
                             linkTextLC = linkText.toLowerCase();
                             linkLink = $(this).attr("href");
 
-                            if ((linkText != undefined && linkText != null && linkTextLC != "") &&
-                                (linkLink != undefined && linkLink != null && linkLink != "")) {
-                                let blogWorthy = blogWords.some(o => linkTextLC.includes(o));
-                                let blogUnworthy = badBlogWords.some(o => linkText.includes(o));
-                                if (blogWorthy) {
-                                    if (!blogUnworthy) {
-                                        linksArr.push({
-                                            "Title": linkText,
-                                            "Link": linkLink
-                                        });
-
-                                    }
-                                }
-                            }
+                            getLinks(linkText, linkTextLC, linkLink);
                         }
-
                     }
-
                 });
             }
-        }
+
+        } //End for loop
 
         fs.writeFile(
             './json/urls.json',
