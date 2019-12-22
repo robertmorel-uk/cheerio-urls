@@ -8,7 +8,7 @@ Dynamically scrape blog post archives for links to blog posts relating to keywor
 
 ## Getting Started
 
-node install dependencies, un as node script
+node install dependencies, run as node script
 
 ### Prerequisites
 

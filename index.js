@@ -6,18 +6,9 @@ Script built in Puppeteer and JavaScript, then migrated to Node using Cheerio an
 const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs');
+const getArchiveUrls = require("./json/archivUrls");
 
-const blogUrls = [
-    "https://www.lexblog.com/site/global-fintech-payments-blog/",
-    "https://www.linklaters.com/en/insights/blogs/fintechlinks",
-    "https://patthomson.net/category/research-project/",
-    "https://www.pentasecurity.com/blog/page/2/",
-    "https://blogs.deloitte.ch/banking/",
-    "https://www.fca.org.uk/insight/",
-    "https://www.bissresearch.com/",
-    "https://www.coindesk.com/",
-    "https://www.newsbtc.com/"
-];
+let blogUrls = [];
 
 let linkText = "";
 let linkTextLC = "";
@@ -59,6 +50,8 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP) => {
         }
     }
 } //end fun
+
+blogUrls = getArchiveUrls.returnArchiveUrls();
 
 let contents = fs.readFileSync("json/urls.json");
 if (contents.length != 0) {
