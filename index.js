@@ -59,32 +59,35 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
         if (blogWorthy) {
             if (!blogUnworthy) {
 
-                let getDescription = urlMetadata(linkLink).then(
+                let getDescription = urlMetadata(linkLink, {
+                    maxRedirects: 3,
+                    timeout: 3000,
+                    descriptionLength: 200
+                  }).then(
                     function (metadata) { // success handler
                         return metadata;
                     },
                     function (error) { // failure handler
-                        console.log(error)
+                        return "No description";
                     }
                 )
 
                 getDescription.then(
                     function (des) {
-                        linksArr.push({
-                            "Title": des.title,
-                            "Link": des.url,
-                            "Description": des.description,
-                            'image': des.image,
-                            'author': des.author,
-                            'keywords': des.keywords,
-                            'source': des.source
-                        })
+                        var index = linksArr.findIndex(x => x.Title==des.title);
+                    
+                        if (index === -1){
+                            linksArr.push({
+                                "Title": des.title,
+                                "Link": des.url,
+                                "Description": des.description,
+                                'keywords': des.keywords,
+                                'source': des.source
+                            })
+                        }
+                        else console.log("object already exists");
                     }
                 )
-
-
-
-
             }
         }
     }
