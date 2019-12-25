@@ -74,14 +74,17 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
 
                 getDescription.then(
                     function (des) {
-                        var index = linksArr.findIndex(x => x.Title==des.title);
+                        let index = linksArr.findIndex(x => x.Title==des.title);
                     
                         if (index === -1){
+                            if( des.keywords == "" ){
+                                keywords = blogWords[0] + ", " + blogWords[1] + ", " + blogWords[2];
+                            } else keywords = des.keywords;
                             linksArr.push({
                                 "Title": des.title,
                                 "Link": des.url,
                                 "Description": des.description,
-                                'keywords': des.keywords,
+                                'keywords': keywords,
                                 'source': des.source
                             })
                         }
