@@ -1,9 +1,6 @@
 module.exports.returnArchiveUrls = function() {
 
     const blogUrls = [
-        "https://www.lexblog.com/site/global-fintech-payments-blog/",
-        "https://www.linklaters.com/en/insights/blogs/fintechlinks",
-        "https://blog.coinbase.com/",
         "https://cointelegraph.com/",
         "https://www.cryptoglobe.com/latest/",
         "https://u.today/",
@@ -11,10 +8,39 @@ module.exports.returnArchiveUrls = function() {
         "https://www.fxstreet.com/cryptocurrencies",
         "https://www.pentasecurity.com/blog/page/2/",
         "https://blogs.deloitte.ch/banking/",
-        "https://www.fca.org.uk/insight/",
         "https://www.bissresearch.com/",
         "https://www.coindesk.com/",
-        "https://www.newsbtc.com/"
+        "https://www.newsbtc.com/",
+        "https://thebitcoinnews.com/",
+        "https://cryptonewshub.net/",
+        "https://cryptonewshub.org/",
+        "https://www.newsnow.co.uk/h/Business+&+Finance/Cryptocurrencies",
+        "https://cryptocurrencynews.com/",
+        "https://www.livebitcoinnews.com/",
+        "https://cryptovest.com/news/",
+        "https://cointelegraph.com/",
+        "https://bitcoinist.com/category/cryptocurrency-news/",
+        "https://www.financemagnates.com/cryptocurrency/",
+        "https://www.ccn.com/fintech/",
+        "https://bitcoinmagazine.com/",
+        "https://www.coindesk.com/category/tech",
+        "https://cryptonewsreview.com/",
+        "https://www.cryptoglobe.com/",
+        "https://www.newsbtc.com/",
+        "https://www.coinjoker.in/",
+        "https://www.coinspeaker.com/",
+        "https://www.trustnodes.com/",
+        "https://cryptocoin.news/",
+        "https://www.cryptonewsz.com/",
+        "https://dailyhodl.com/",
+        "https://coingape.com/news/",
+        "https://cryptoslate.com/",
+        "https://cryptobriefing.com/",
+        "https://ethereumworldnews.com/",
+        "https://www.cointelligence.com/",
+        "https://blokt.com/news",
+        "https://coinnounce.com/",
+        "https://cryptopotato.com/"
     ];
 
     return blogUrls;

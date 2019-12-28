@@ -11,6 +11,12 @@ const axios = require('axios')
 const fs = require('fs');
 const urlMetadata = require('url-metadata')
 
+fs.writeFile(
+    './json/urls.json',
+    "",
+    (err) => err ? console.error('Data not written!', err) : ""
+)
+
 const getArchiveUrls = require("./json/archivUrls");
 
 let blogUrls = [];
@@ -48,7 +54,11 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
     let blogWorthy = false;
     let blogUnworthy = false;
 
-    const blogWords = ['blog', 'cryptocurrency', 'crypterium', 'blockchain', 'fintech', 'libra', 'equity', 'bank', 'research', 'MiFid', 'data', 'hacking', 'bitcoin'];
+    const blogWords = [
+        'bitcoin', 'btc','eth', 'litecoin', 'ltc', 'dash', 'xmr', 'monero', 'nxt', 'etc', 'doge', 'zec', 'xrp', 'ripple', 'blockchain',
+        'dlt', 'crypto', 'xlm', 'stellar', 'xvg', 'verge', 'ada', 'cardano', 'tether', 'usdt', 'bch', 'eos', 'bnb', 'binance', 
+        'atom', 'link', 'neo', 'maker', 'ontology', 'bat', 'quantum', 'zrx', 'nano', 'satoshi', 'bakkt', 'digital asset', 'ico', 
+        'hodl', 'exchange'];
 
     const badBlogWords = ['..', '...', '»', ' · '];
 
@@ -74,21 +84,20 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
 
                 getDescription.then(
                     function (des) {
-                        let index = linksArr.findIndex(x => x.Title==des.title);
+                        let desT = des.title;
+                        let index = linksArr.findIndex(x => x.Title==desT);
                     
                         if (index === -1){
-                            if( des.keywords == "" ){
-                                keywords = blogWords[0] + ", " + blogWords[1] + ", " + blogWords[2];
-                            } else keywords = des.keywords;
+                            if ((desT != null)){
                             linksArr.push({
-                                "Title": des.title,
+                                "Title": desT,
                                 "Link": des.url,
                                 "Description": des.description,
-                                'keywords': keywords,
                                 'source': des.source
                             })
                         }
-                        else console.log("object already exists");
+                        }
+                        else {}
                     }
                 )
             }
@@ -156,7 +165,7 @@ for (let r = 0; r < blogUrls.length; r++) {
         fs.writeFile(
             './json/urls.json',
             JSON.stringify(linksArr, null, 2),
-            (err) => err ? console.error('Data not written!', err) : console.log('Data written!')
+            (err) => err ? console.error('Data not written!', err) : ""
         )
 
     })
