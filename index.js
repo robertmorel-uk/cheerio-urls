@@ -11,12 +11,6 @@ const axios = require('axios')
 const fs = require('fs');
 const urlMetadata = require('url-metadata')
 
-fs.writeFile(
-    './json/urls.json',
-    JSON.stringify("", null, 2),
-    (err) => err ? console.error('clean json', err) : ""
-)
-
 const getArchiveUrls = require("./json/archivUrls");
 
 let blogUrls = [];
