@@ -1,18 +1,22 @@
 module.exports.returnArchiveUrls = function() {
 
     const blogUrls = [
+        "https://bitcointicker.co/news/",
         "https://cointelegraph.com/",
         "https://www.cryptoglobe.com/latest/",
+        "https://cointelegraph.com/tags/altcoin",
+        "https://www.ccn.com/tag/altcoin-news/",
+        "https://www.livebitcoinnews.com/news/altcoin-news/",
+        "https://cryptoslate.com/altcoins/",
+        "https://www.coininsider.com/category/news/altcoin-news/",
+        "https://www.altcoinbuzz.io/category/crypto-news/",
         "https://u.today/",
         "https://www.ccn.com/",
         "https://www.fxstreet.com/cryptocurrencies",
-        "https://www.pentasecurity.com/blog/page/2/",
-        "https://blogs.deloitte.ch/banking/",
         "https://www.bissresearch.com/",
         "https://www.coindesk.com/",
         "https://www.newsbtc.com/",
         "https://thebitcoinnews.com/",
-        "https://cryptonewshub.net/",
         "https://cryptonewshub.org/",
         "https://www.newsnow.co.uk/h/Business+&+Finance/Cryptocurrencies",
         "https://cryptocurrencynews.com/",
@@ -27,7 +31,6 @@ module.exports.returnArchiveUrls = function() {
         "https://cryptonewsreview.com/",
         "https://www.cryptoglobe.com/",
         "https://www.newsbtc.com/",
-        "https://www.coinjoker.in/",
         "https://www.coinspeaker.com/",
         "https://www.trustnodes.com/",
         "https://cryptocoin.news/",
@@ -40,7 +43,14 @@ module.exports.returnArchiveUrls = function() {
         "https://www.cointelligence.com/",
         "https://blokt.com/news",
         "https://coinnounce.com/",
-        "https://cryptopotato.com/"
+        "https://cryptopotato.com/",
+        "https://blog.chain.link/",
+        "https://bitcoinist.com/category/altcoin-news/",
+        "https://cryptonews.com/news/altcoin-news/",
+        "https://beincrypto.com/altcoin-news/",
+        "https://cointelegraph.com/tags/ethereum-classic",
+        "https://www.coindesk.com/price/ethereum-classic"
+
     ];
 
     return blogUrls;
