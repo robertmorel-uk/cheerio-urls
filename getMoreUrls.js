@@ -11,7 +11,7 @@ const axios = require('axios')
 const fs = require('fs');
 const urlMetadata = require('url-metadata')
 
-const getArchiveUrls = require("./json/archiveUrls");
+const getMoreArchiveUrls = require("./json/moreArchiveUrls");
 
 let blogUrls = [];
 
@@ -102,7 +102,7 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
                         }
 
                         fs.writeFile(
-                            './json/urls.json',
+                            './json/moreUrls.json',
                             JSON.stringify(linksArr, null, 2),
                             (err) => err ? console.error('Data not written!', err) : ""
                         )
@@ -114,9 +114,9 @@ let getLinks = (linkTextP, linkTextLCP, linkLinkP, linkDomainP) => {
     }
 } //end fun
 
-blogUrls = getArchiveUrls.returnArchiveUrls();
+blogUrls = getMoreArchiveUrls.returnMoreArchiveUrls();
 
-let contents = fs.readFileSync("json/urls.json");
+let contents = fs.readFileSync("json/moreUrls.json");
 if (contents.length != 0) {
     jsonContent = JSON.parse(contents);
 } else jsonContent = linksArr;

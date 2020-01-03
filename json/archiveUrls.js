@@ -47,11 +47,12 @@ module.exports.returnArchiveUrls = function() {
         "https://blog.chain.link/",
         "https://bitcoinist.com/category/altcoin-news/",
         "https://cryptonews.com/news/altcoin-news/",
-        "https://beincrypto.com/altcoin-news/",
         "https://cointelegraph.com/tags/ethereum-classic",
         "https://www.coindesk.com/price/ethereum-classic"
 
     ];
+
+    //    DONT USE "https://beincrypto.com/altcoin-news/",
 
     return blogUrls;
   };
