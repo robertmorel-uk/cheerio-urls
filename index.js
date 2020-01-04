@@ -74,16 +74,10 @@ function main() {
 
                     getDescription.then(
                         function (des) {
-                            try {
-                                if (des.title != undefined) {
-                                    let desT = des.title.split('|')[0];
-                                } else {
-                                    let desT = "0";
-                                }
-                            } catch (err) {
-                                let desT = "Title not found";
-                                console.log("Title fail" + err);
-                            }
+                        let desT = "";
+                        if (des.title != undefined) {
+                            desT = des.title.split('|')[0];
+                        }
                             let desD = des.description + "...";
                             let index = linksArr.findIndex(x => x.Title == desT);
                             let publishDate = des["article:published_time"];
@@ -95,7 +89,7 @@ function main() {
                             }
 
                             if (index === -1) {
-                                if (desT != null) {
+                                if (desT != null && desT != "") {
                                     linksArr.push({
                                         "Title": desT,
                                         "Link": des.url,
@@ -120,7 +114,7 @@ function main() {
 
     blogUrls = getArchiveUrls.returnArchiveUrls();
 
-    let contents = fs.readFileSync("json/urls.json");
+    let contents = fs.readFileSync("./json/urls.json");
     if (contents.length != 0) {
         jsonContent = JSON.parse(contents);
     } else jsonContent = linksArr;
