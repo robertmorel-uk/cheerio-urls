@@ -48,8 +48,18 @@ module.exports.returnArchiveUrls = function() {
         "https://bitcoinist.com/category/altcoin-news/",
         "https://cryptonews.com/news/altcoin-news/",
         "https://cointelegraph.com/tags/ethereum-classic",
-        "https://www.coindesk.com/price/ethereum-classic"
-
+        "https://www.coindesk.com/price/ethereum-classic",
+        "https://cryptobriefing.com/",
+        "https://bitcoinist.com/",
+        "https://cryptonews.com/",
+        "https://u.today/latest-bitcoin-btc-news",
+        "https://u.today/eth-latest-news-ethereum-news-today",
+        "https://u.today/latest-ripple-xrp-news",
+        "https://u.today/eos-cryptocurrency-news-today",
+        "https://u.today/tron-trx-coin-news-today",
+        "https://coingape.com/",
+        "https://news.bitcoin.com/",
+        "https://themerkle.com/category/news/crypto/"
     ];
 
     //    DONT USE    "https://beincrypto.com/altcoin-news/",
