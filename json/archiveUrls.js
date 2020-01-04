@@ -52,7 +52,7 @@ module.exports.returnArchiveUrls = function() {
 
     ];
 
-    //    DONT USE "https://beincrypto.com/altcoin-news/",
+    //    DONT USE    "https://beincrypto.com/altcoin-news/",
 
     return blogUrls;
   };
