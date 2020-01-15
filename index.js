@@ -1,10 +1,13 @@
 // index.js
 function main() {
 
-    const cheerio = require('cheerio')
-    const axios = require('axios')
+    const cheerio = require('cheerio');
+    const axios = require('axios');
     const fs = require('fs');
-    const urlMetadata = require('url-metadata')
+    const urlMetadata = require('url-metadata');
+
+    const mysql  = require('mysql');
+    const config = require('./config.js');
 
     const getArchiveUrls = require("./json/archiveUrls");
 
@@ -50,6 +53,15 @@ function main() {
             'hodl', 'exchange', 'tron'
         ];
 
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+         }
+
         const badBlogWords = ['..', '...', '»', ' · '];
 
         if ((linkText != undefined && linkText != null && linkTextLC != "") &&
@@ -75,10 +87,16 @@ function main() {
                     getDescription.then(
                         function (des) {
                         let desT = "";
+                        let desU = "";
                         if (des.title != undefined) {
                             desT = des.title.split('|')[0];
+                            desT = escapeHtml(desT);
+
+                            desU = des.url.split('|')[0];
+                            desU = escapeHtml(desU);
                         }
                             let desD = des.description + "...";
+                            desD = escapeHtml(desD);
                             let index = linksArr.findIndex(x => x.Title == desT);
                             let publishDate = des["article:published_time"];
 
@@ -87,24 +105,16 @@ function main() {
                                 d.setDate(d.getDate() - 5);
                                 publishDate = d;
                             }
-
+                            const connection = mysql.createConnection(config);
                             if (index === -1) {
+                                console.log(1);
                                 if (desT != null && desT != "") {
-                                    linksArr.push({
-                                        "Title": desT,
-                                        "Link": des.url,
-                                        "Description": desD,
-                                        'Source': des.source,
-                                        'Date': publishDate
-                                    })
+                                    let sql = "INSERT INTO `cryptourlentries` (`urlTitle`,`urlLink`,`urlDescription`,`urlSource`,`urlDate`) VALUES ('"+desT+"','"+desU+"','"+desD+"','"+des.source+"','"+publishDate+"')";
+                                    connection.query(sql);
                                 }
                             }
+                            connection.end();
 
-                            fs.writeFile(
-                                './json/urls.json',
-                                JSON.stringify(linksArr, null, 2),
-                                (err) => err ? console.error('Data not written!', err) : ""
-                            )
                         }
                     )
                 }
